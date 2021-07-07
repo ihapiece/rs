@@ -1,0 +1,119 @@
+#include "vec.h"
+
+Vec::Vec() {
+	x = y = 0;
+}
+
+Vec::Vec(float x_, float y_) {
+	x = x_;
+	y = y_;
+}
+
+float Vec::mag() const {
+	return sqrt(x*x+y*y);
+}
+
+void Vec::normalize() {
+	operator*=(1/mag());
+}
+
+Vec Vec::normalized() const {
+	Vec v_(x, y);
+	v_.normalize();
+	return v_;
+}
+
+float Vec::dir() const {
+	return -1*(atan2(-y, x));
+}
+
+float Vec::dot(const Vec& v) const {
+	return x*v.x + y*v.y;
+}
+
+Vec Vec::lerp(const Vec& v, float t) const {
+	return Vec(x, y) + (v-Vec(x, y))*t;
+}
+
+void Vec::head_to(float a) {
+	float d_ = mag();
+	x = cos(a)*d_;
+	y = sin(a)*d_;
+}
+
+void Vec::rotate(float a) {
+	head_to(dir()+a);
+}
+
+Vec Vec::operator+(const Vec& v) const {
+	return Vec(x + v.x, y + v.y);
+}
+
+Vec Vec::operator-(const Vec& v) const {
+	return Vec(x - v.x, y - v.y);
+}
+
+Vec Vec::operator*(const float s) const {
+	return Vec(x*s, y*s);
+}
+
+Vec Vec::operator/(const float s) const {
+	return Vec(x/s, y/s);
+}
+
+Vec Vec::operator+(const float s) const {	
+	Vec v_(x, y);
+	v_.normalize();
+	v_ = v_ * (mag()+s);
+	return v_;
+}
+
+Vec Vec::operator-(const float s) const {
+	Vec v_(x, y);
+	v_.normalize();
+	v_ = v_ * (mag()-s);
+	return v_;
+}
+
+void Vec::operator=(const Vec& v) {
+	//std::cout << &v << "\n";
+	x = v.x;
+	y = v.y;
+}
+
+void Vec::operator+=(const Vec& v) {
+	x += v.x;
+	y += v.y;
+}
+
+void Vec::operator-=(const Vec& v) {
+	x -= v.x;
+	y -= v.y;
+}
+
+void Vec::operator*=(const float s) {
+	x *= s;
+	y *= s;
+}
+
+void Vec::operator/=(const float s) {
+	x /= s;
+	y /= s;
+}
+
+void Vec::operator=(const float s) {
+	normalize();
+	operator*=(s);
+}
+
+void Vec::operator+=(const float s) {
+	float d_ = mag();
+	normalize();
+	operator*=(d_+s);
+}
+
+void Vec::operator-=(const float s) {
+	float d_ = mag();
+	normalize();
+	operator*=(d_-s);
+}
