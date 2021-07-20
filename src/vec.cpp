@@ -61,7 +61,7 @@ Vec Vec::operator/(const float s) const {
 	return Vec(x/s, y/s);
 }
 
-Vec Vec::operator+(const float s) const {	
+Vec Vec::operator+(const float s) const {
 	Vec v_(x, y);
 	v_.normalize();
 	v_ = v_ * (mag()+s);
@@ -116,4 +116,10 @@ void Vec::operator-=(const float s) {
 	float d_ = mag();
 	normalize();
 	operator*=(d_-s);
+}
+
+int sign(int x) {
+	if (x > 0) {return 1;}
+	if (x < 0) {return -1;}
+	return 0;
 }

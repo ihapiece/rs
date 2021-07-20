@@ -18,6 +18,8 @@ void Game::on_game_start() {
 }
 
 void Game::on_game_loop() {
+	int ticks = SDL_GetTicks();
+
 	input->update();
 
 	if (input->keyboard_check_pressed(SDLK_F4)) {
@@ -35,8 +37,11 @@ void Game::on_game_loop() {
 	for (auto i : entities) {i->t_draw();}
 	for (auto i : entities) {i->t_end_draw();}
 
-	SDL_Delay(1000/60);
 	graphics->draw_flip();
+
+	dt = SDL_GetTicks() - ticks;
+
+	if (dt < 13) {SDL_Delay((1000/60) - dt);}
 }
 
 void Game::run() {

@@ -21,13 +21,12 @@ bool Input::keyboard_check_pressed(SDL_Keycode k) {
 
 bool Input::keyboard_check_released(SDL_Keycode k) {
 	return !keys[k] && keys_last[k];
-	
 }
 
 void Input::update() {
 	to_last();
 	SDL_Event event;
-	
+
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_QUIT:

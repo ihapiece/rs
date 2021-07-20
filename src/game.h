@@ -18,8 +18,6 @@ protected:
 	bool quit;
 	bool restart;
 
-	std::vector<std::shared_ptr<Entity>> entities;
-
 	void on_game_start(); // game starts and restarts here
 	void on_game_loop(); // what happens in each frame from begin step to draw end,
 						// cycles through object pool and calls their frame functions
@@ -27,7 +25,9 @@ protected:
 public:
 	Input* input;
 	Graphics* graphics;
-	
+	unsigned int dt;
+	std::vector<std::shared_ptr<Entity>> entities;
+
 	Game(); // get input and graphics ready
 	~Game(); // flush everything
 
@@ -46,21 +46,22 @@ public:
 	Input* input;
 	Graphics* graphics;
 
-	Vec pos; // top-left of bb
+	Vec pos; // center of sprite
 	Vec pos_previous;
 	Vec pos_start;
-	Vec size;
-
+	Vec btl; // top left relative to pos
+	Vec bbr; // bottom right relative to pos
 	Vec speed;
+	bool solid;
+	bool moves;
 
 	std::string sprite;
 	int subimg;
 	float anim_speed;
 	float subimgf;
-	float xscale;
+	float xscale; //sprite stretching, unrelated to the bounding box
 	float yscale;
 	float angle;
-	bool use_sprite_size;
 	SDL_Color color;
 
 	Entity(); //must set name and initialize()
@@ -82,7 +83,7 @@ public:
 	virtual void on_game_end();
 
 protected:
-	std::string name; // name of the class, same as GM's object_index in a way, different for each entity class
+	std::string name;
 	bool created;
 	bool destroyed;
 
@@ -97,5 +98,7 @@ protected:
 	virtual void on_end_draw();
 
 	virtual void on_destroy();
-	
+
+	Entity* meeting_solid(Vec pos_);
+	bool meeting_entity(Vec pos_, Entity* i);
 };

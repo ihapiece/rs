@@ -1,5 +1,15 @@
 #include "game.h"
 
+// todo at the moment
+// - subspaces
+// - move the player and stuff to their own files you animal
+// - world and world serialization
+// - saving and loading
+// - asset unpacking with physfs
+// - rotatable subspaces
+// - slopes
+// - subspace teleportation
+
 class Player : public Entity {
 	public:
 	Player() {
@@ -8,30 +18,75 @@ class Player : public Entity {
 	}
 
 	protected:
-	int health;
+	Entity* ground;
+	unsigned char coyote;
+	float gaccel;
+	float friction;
+	float maxspeed;
+	float aaccel;
+	float airres;
+
 	virtual void on_create() {
-		health = 10;
+		gaccel = .5;
+		friction = 1;
+		maxspeed = 4;
+		aaccel = .3;
+		airres = .6;
 		pos = Vec(200, 300);
+		btl = Vec(-8, -10);
+		bbr = Vec(8, 24);
 		std::cout << "Player create event\n";
 		sprite = "spr_player_strip5"; // TODO make this better
+		anim_speed = 0;
 	}
-	
+
 	virtual void on_step() {
-		bool grounded = false;
-		speed.x = (int(input->keyboard_check(SDLK_RIGHT))-int(input->keyboard_check(SDLK_LEFT)))*4;
-		speed.y += 1;
-		if (input->keyboard_check_pressed(SDLK_UP)) {pos.y--; speed.y = -12;}
-		if (input->keyboard_check_released(SDLK_a)) {graphics->camerapos.x--;}
-		if (input->keyboard_check_released(SDLK_d)) {graphics->camerapos.x++;}
-		if (input->keyboard_check(SDLK_w)) {graphics->scale += 0.02;}
-		if (input->keyboard_check(SDLK_s)) {graphics->scale -= 0.02;}
-		if (health <= 0) {instance_destroy();}
-		if (pos.y >= 480-size.y/2) {pos.y = 480-size.y/2; speed.y = 0; grounded = true;}
-		if (speed.x != 0) {xscale = (speed.x/abs(speed.x)); anim_speed = 0.4;} else {subimg = 0; anim_speed = 0;}
-		if (!grounded) {anim_speed = 0; subimg = 4;}
+		if (coyote > 0) {coyote--;}
+		ground = meeting_solid(pos+Vec(0, 1));
+		if (ground == NULL) {speed.y += .5;} else {coyote = 6;}
+		int move = int(input->keyboard_check(SDLK_d))-int(input->keyboard_check(SDLK_a));
+		//std::cout << move << "\n";
+		if (input->keyboard_check_pressed(SDLK_w) && coyote > 0) {speed.y = -8; coyote = 0;}
+
+		if (ground != NULL) {
+			if (move != 0) {
+				if (speed.x*move < maxspeed) {speed.x += move*gaccel;}
+			} else {
+				speed.x += friction*-sign(speed.x);
+				if (speed.x < friction) {speed.x = 0;}
+			}
+		} else {
+			if (move != 0) {
+				if (speed.x*move < maxspeed) {speed.x += move*aaccel;}
+			} else {
+				speed.x += airres*-sign(speed.x);
+				if (speed.x < airres) {speed.x = 0;}
+			}
+		}
+
+		pos += speed;
 	}
 
 	virtual void on_end_step() {
+		if (ground) {
+			if (ground->moves) {
+				pos += ground->pos - ground->pos_previous;
+			}
+		}
+		unsigned char n = 0;
+		while (Entity* i = meeting_solid(pos)) {
+			n++;
+			if (n > 5) {break;}
+			int u = 0; int d = 0; int l = 0; int r = 0;
+			while (meeting_entity(pos+Vec(0, u), i)) {u--;}
+			while (meeting_entity(pos+Vec(0, d), i)) {d++;}
+			if (d > abs(u)) {d = u;}
+			while (meeting_entity(pos+Vec(l, 0), i)) {l--;}
+			while (meeting_entity(pos+Vec(r, 0), i)) {r++;}
+			if (r > abs(l)) {r = l;}
+			if (abs(d) < abs(r)) {speed.y = int(!(speed.y * d < 0)); pos.y += d;} else {speed.x = int(!(speed.x * r < 0)); pos.x += r;}
+		}
+
 		graphics->camerapos = graphics->camerapos.lerp(pos, 0.1);
 	}
 
@@ -40,17 +95,50 @@ class Player : public Entity {
 		graphics->draw_clear();
 	}
 
-	virtual void on_end_draw() {
-		graphics->draw_set_color(0xFF, 0xFF, 0xFF, 0xFF);
-		graphics->draw_rectangle(pos-size/2, pos+size/2, true);
-		//graphics->draw_rectangle(Vec(8, 8), graphics->window_get_size()-Vec(8, 8), true);
-		graphics->draw_line(Vec(0, 480), Vec(300, 480));
-		graphics->draw_line(pos, pos-Vec(6, 6));
-		graphics->draw_line(graphics->camerapos, graphics->camerapos-Vec(6, -6));
-	}
-
 	virtual void on_destroy() {
 		std::cout << "Player died";
+	}
+};
+
+class Block : public Entity {
+public:
+	Block() {
+		initialize();
+		name = "Block";
+		solid = true;
+		moves = false;
+	}
+
+	virtual void on_end_draw() {
+		graphics->draw_rectangle(pos+btl, pos+bbr, false);
+	}
+};
+
+class WavingBlock : public Entity {
+public:
+	float t;
+	float basey;
+	float basex;
+	WavingBlock() {
+		initialize();
+		name = "WavingBlock";
+		solid = true;
+	}
+
+	virtual void on_create() {
+		t = 0;
+		basey = pos.y;
+		basex = pos.x;
+	}
+
+	virtual void on_step() {
+		t++;
+		pos.y = basey+sin(t/60)*100;
+		pos.x = basex+cos(t/60)*100;
+	}
+
+	virtual void on_end_draw() {
+		graphics->draw_rectangle(pos+btl, pos+bbr, false);
 	}
 };
 
@@ -60,6 +148,24 @@ int main(int argc, char *argv[]) {
 	std::cout << "Game was constructed\n";
 	game.graphics->load_sprite("spr_player_strip5", 5);
 	game.instance_add(std::make_shared<Player>());
+	auto b = game.instance_add(std::make_shared<Block>());
+	b->pos = Vec(200, 480);
+	b->btl = Vec(-600, -32);
+	b->bbr = Vec(600, 32);
+	b = game.instance_add(std::make_shared<Block>());
+	b->pos = Vec(300, 320);
+	b->btl = Vec(-16, -40);
+	b->bbr = Vec(16, 40);
+	b = game.instance_add(std::make_shared<WavingBlock>());
+	b->pos = Vec(200, 480-64);
+	b->btl = Vec(-32, -32);
+	b->bbr = Vec(32, 32);
+	for (int i = 0; i < 100; i++) {
+		b = game.instance_add(std::make_shared<Block>());
+		b->pos = Vec(0, i*32);
+		b->btl = Vec(-16, -16);
+		b->bbr = Vec(16, 16);
+	}
 	game.run();
 	std::cout << "Game finished running\n";
 	return 0;

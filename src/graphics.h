@@ -18,7 +18,7 @@ class Graphics {
 public:
 	SDL_Color draw_color;
 	std::map<std::string, Sprite*> sprites;
-	
+
 	float scale;
 	Vec camerapos;
 	bool to_camera;

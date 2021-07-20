@@ -7,7 +7,7 @@ Graphics::Graphics() {
 
 	windowsize = {640, 360};
 	window = SDL_CreateWindow("GMist", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowsize.x, windowsize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	to_camera = true;
 	scale = 1;
 }
@@ -66,14 +66,14 @@ void Graphics::draw_line(Vec p1, Vec p2) {
 }
 
 void Graphics::draw_triangle(Vec p1, Vec p2, Vec p3, bool outline) {
-	
+
 }
 
 void Graphics::draw_rectangle(Vec p1, Vec p2, bool outline) {
 	p1 *= scale; p2 *= scale;
 	p1 -= camerapos*scale - windowsize/2;
 	p2 -= camerapos*scale - windowsize/2;
-	SDL_Rect r = {p1.x, p1.y, p2.x-p1.x, p2.y-p1.y};	
+	SDL_Rect r = {p1.x, p1.y, p2.x-p1.x, p2.y-p1.y};
 	if (outline) {
 		SDL_RenderDrawRect(renderer, &r);
 	} else {

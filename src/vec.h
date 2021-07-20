@@ -34,3 +34,5 @@ struct Vec {
 	void operator+=(const float s);
 	void operator-=(const float s);
 };
+
+int sign(int x);
