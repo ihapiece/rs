@@ -69,8 +69,7 @@ void Entity::on_game_end() {}
 Entity* Entity::meeting_solid(Vec pos_) {
 	for (auto i : game->entities) {
 		if (i.get() != this && i->solid) {
-			if (!(pos_.x+bbr.x <= i->pos.x+i->btl.x || pos_.x+btl.x >= i->pos.x+i->bbr.x) &&
-				  !(pos_.y+bbr.y <= i->pos.y+i->btl.y || pos_.y+btl.y >= i->pos.y+i->bbr.y)) {
+			if (game->subspace->ssaabb(pos_+btl, pos_+bbr, i->pos+i->btl, i->pos+i->bbr)) {
 				return i.get();
 			}
 		}
@@ -80,8 +79,7 @@ Entity* Entity::meeting_solid(Vec pos_) {
 
 bool Entity::meeting_entity(Vec pos_, Entity* i) {
 	if (i != this) {
-		if (!(pos_.x+bbr.x <= i->pos.x+i->btl.x || pos_.x+btl.x >= i->pos.x+i->bbr.x) &&
-				!(pos_.y+bbr.y <= i->pos.y+i->btl.y || pos_.y+btl.y >= i->pos.y+i->bbr.y)) {
+		if (game->subspace->ssaabb(pos_+btl, pos_+bbr, i->pos+i->btl, i->pos+i->bbr)) {
 			return true;
 		}
 	}

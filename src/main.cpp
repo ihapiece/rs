@@ -95,6 +95,13 @@ class Player : public Entity {
 		graphics->draw_clear();
 	}
 
+	virtual void on_draw() {
+		graphics->draw_sprite_ex(sprite, subimg, pos, angle, xscale, yscale);
+		SDL_SetRenderTarget(graphics->renderer, game->subspace->subspace_texture);
+		graphics->draw_sprite_ex(sprite, subimg, pos-game->subspace->tl[0], angle, xscale, yscale);
+		SDL_SetRenderTarget(graphics->renderer, NULL);
+	}
+
 	virtual void on_destroy() {
 		std::cout << "Player died";
 	}
@@ -110,7 +117,11 @@ public:
 	}
 
 	virtual void on_end_draw() {
+		graphics->draw_set_color(0xff, 0xff, 0xff, 0x00);
 		graphics->draw_rectangle(pos+btl, pos+bbr, false);
+		SDL_SetRenderTarget(graphics->renderer, game->subspace->subspace_texture);
+		graphics->draw_rectangle(pos+btl-game->subspace->tl[0], pos+bbr-game->subspace->tl[0], false);
+		SDL_SetRenderTarget(graphics->renderer, NULL);
 	}
 };
 
@@ -138,7 +149,11 @@ public:
 	}
 
 	virtual void on_end_draw() {
+		graphics->draw_set_color(0xff, 0xff, 0xff, 0x00);
 		graphics->draw_rectangle(pos+btl, pos+bbr, false);
+		SDL_SetRenderTarget(graphics->renderer, game->subspace->subspace_texture);
+		graphics->draw_rectangle(pos+btl, pos+bbr, false);
+		SDL_SetRenderTarget(graphics->renderer, NULL);
 	}
 };
 

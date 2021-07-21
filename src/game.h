@@ -11,6 +11,8 @@
 #include "graphics.h"
 #include "input.h"
 
+#include "subspace.h"
+
 class Entity;
 
 class Game { // this is bad software architecture but who cares
@@ -27,6 +29,7 @@ public:
 	Graphics* graphics;
 	unsigned int dt;
 	std::vector<std::shared_ptr<Entity>> entities;
+	Subspace* subspace;
 
 	Game(); // get input and graphics ready
 	~Game(); // flush everything

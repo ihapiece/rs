@@ -77,7 +77,7 @@ void Graphics::draw_rectangle(Vec p1, Vec p2, bool outline) {
 	if (outline) {
 		SDL_RenderDrawRect(renderer, &r);
 	} else {
-		SDL_RenderDrawRect(renderer, &r);
+		SDL_RenderFillRect(renderer, &r);
 	}
 }
 
@@ -111,6 +111,15 @@ void Graphics::draw_sprite_ex(const std::string& sprname, int subimg, Vec pos, f
 	p2 -= camerapos*scale - windowsize/2;
 	SDL_Rect dest = {p1.x, p1.y, p2.x-p1.x, p2.y-p1.y};
 	SDL_RenderCopyEx(renderer, spr->texture, &src, &dest, angle, NULL, flip);
+}
+
+void Graphics::draw_texture(SDL_Texture* tex, Vec p1, Vec p2, Vec srcsize) {
+	p1 *= scale; p2 *= scale;
+	p1 -= camerapos*scale - windowsize/2;
+	p2 -= camerapos*scale - windowsize/2;
+	SDL_Rect src = {0, 0, int(srcsize.x), int(srcsize.y)};
+	SDL_Rect dest = {p1.x, p1.y, p2.x-p1.x, p2.y-p1.y};
+	SDL_RenderCopyEx(renderer, tex, &src, &dest, 0, NULL, SDL_FLIP_NONE);
 }
 
 float Graphics::get_sprite_width(const std::string& sprname) {

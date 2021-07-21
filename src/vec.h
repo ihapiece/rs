@@ -36,3 +36,4 @@ struct Vec {
 };
 
 int sign(int x);
+bool aabb(Vec tl1, Vec br1, Vec tl2, Vec br2);

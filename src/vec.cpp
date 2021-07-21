@@ -123,3 +123,7 @@ int sign(int x) {
 	if (x < 0) {return -1;}
 	return 0;
 }
+
+bool aabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
+  return (!(br1.x <= tl2.x || tl1.x >= br2.x) && !(br1.y <= tl2.y || tl1.y >= br2.y));
+}

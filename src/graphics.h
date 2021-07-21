@@ -16,6 +16,8 @@ struct Sprite {
 
 class Graphics {
 public:
+	SDL_Renderer* renderer;
+
 	SDL_Color draw_color;
 	std::map<std::string, Sprite*> sprites;
 
@@ -45,8 +47,9 @@ public:
 	void draw_sprite_ex(const std::string& sprname, int subimg, Vec pos, float angle, float xscale, float yscale);
 	float get_sprite_width(const std::string& sprname);
 	float get_sprite_height(const std::string& sprname);
+	void draw_texture(SDL_Texture* tex, Vec p1, Vec p2, Vec srcsize);
+
 private:
-	SDL_Renderer* renderer;
 	SDL_Window* window;
 	SDL_DisplayMode display;
 
