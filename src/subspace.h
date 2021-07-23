@@ -6,11 +6,10 @@
 class Subspace {
 public:
   Graphics* graphics;
-  unsigned int count;
+  int count;
   std::vector<Vec> tl; // top left position of each member
   std::vector<Vec> br; // bottom right position of each member
 
-  SDL_Texture* subspace_texture;
   Subspace(Vec pos, Vec size, Graphics* g);
   void add(Vec pos);
   void add(Vec pos, Vec size);

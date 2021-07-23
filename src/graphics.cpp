@@ -6,7 +6,7 @@ Graphics::Graphics() {
 	SDL_GetDesktopDisplayMode(0, &display);
 
 	windowsize = {640, 360};
-	window = SDL_CreateWindow("GMist", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowsize.x, windowsize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("rs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowsize.x, windowsize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	to_camera = true;
 	scale = 1;
