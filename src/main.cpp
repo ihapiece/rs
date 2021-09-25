@@ -4,10 +4,8 @@
 // reminder: there's a command that generates the SDL compile command
 
 // todo at the moment
+// - switch to SFML, i can't be bothered with SDL's shit anymore
 // - main/pause menu (same thing to be simple)
-// - integrate SDL_gfx
-//   - use its framerate controller
-//   - use its primitives
 // - subspaces
 // - move the player and stuff to their own files you animal
 // - world and world serialization
