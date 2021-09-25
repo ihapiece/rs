@@ -17,12 +17,7 @@ class Entity;
 
 class Game { // this is bad software architecture but who cares
 protected:
-	bool quit;
-	bool restart;
-
-	void on_game_start(); // game starts and restarts here
-	void on_game_loop(); // what happens in each frame from begin step to draw end,
-						// cycles through object pool and calls their frame functions
+	bool* quit;
 
 public:
 	Input* input;
@@ -31,13 +26,14 @@ public:
 	std::vector<std::shared_ptr<Entity>> entities;
 	Subspace* subspace;
 
-	Game(); // get input and graphics ready
+	Game(bool* q_); // get input and graphics ready
 	~Game(); // flush everything
 
 	void run();
+	void on_game_start();
+	void on_game_loop();
 
 	void game_end();
-	void game_restart();
 
 	Entity* instance_add(std::shared_ptr<Entity> inst);
 	void instance_remove(Entity* inst);
@@ -65,7 +61,6 @@ public:
 	float xscale; //sprite stretching, unrelated to the bounding box
 	float yscale;
 	float angle;
-	SDL_Color color;
 
 	Entity(); //must set name and initialize()
 	void initialize(); // mandatory to call before anything else in constructor

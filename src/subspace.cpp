@@ -28,7 +28,7 @@ bool Subspace::ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
         Vec br2crop = { std::min(br2.x, br[i].x), std::min(br2.y, br[i].y) };
         tl2crop += tl[j]-tl[i];
         br2crop += tl[j]-tl[i];
-        graphics->draw_set_color(0x00, 0xff, 0x00, 0xff);
+        graphics->draw_set_color(0x01, 0xff, 0x01, 0xff);
         graphics->draw_rectangle(tl2crop, br2crop, true);
         if (j != i && aabb(tl1, br1, tl2crop, br2crop)) {return true;}
       }

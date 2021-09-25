@@ -17,7 +17,6 @@ void Entity::initialize() {
 	yscale = 1;
 	angle = 0;
 	solid = false;
-	color = {0xFF, 0xFF, 0xFF, 0xFF};
 }
 
 void Entity::t_begin_step() {
@@ -58,7 +57,6 @@ void Entity::on_end_step() {}
 void Entity::on_begin_draw() {}
 void Entity::on_draw() {
 	if (sprite != "none") {
-		graphics->draw_set_color(color);
 		graphics->draw_sprite_ex(sprite, subimg, pos, angle, xscale, yscale);
 	}
 }

@@ -34,7 +34,6 @@ public:
 	Vec window_get_size();
 
 	void draw_set_color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-	void draw_set_color(SDL_Color& c);
 	void draw_clear();
 	void draw_flip();
 	void draw_line(Vec p1, Vec p2);

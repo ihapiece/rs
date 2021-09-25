@@ -1,36 +1,22 @@
 #include "game.h"
 
-Game::Game() {
-	input = new Input(&quit);
-	graphics = new Graphics;
-	input->graphics = graphics;
-	quit = false;
-	restart = false;
+Game::Game(bool* q_) : quit(q_) {
 
-	subspace = new Subspace(Vec(400, 320), Vec(140, 100), graphics);
-	subspace->add(Vec(100, 340));
-	subspace->add(Vec(160, 300));
 }
 
 Game::~Game() {
-	delete input;
-	delete graphics;
-	delete subspace; // temporary
+	delete subspace; // temporary, will make some entity control subspaces soon
 }
 
 void Game::on_game_start() {
+	subspace = new Subspace(Vec(400, 320), Vec(140, 100), graphics);
+	subspace->add(Vec(100, 340));
+	subspace->add(Vec(160, 300));
+
 	for (auto i : entities) {i->on_game_start();}
 }
 
 void Game::on_game_loop() {
-	int ticks = SDL_GetTicks();
-
-	input->update();
-
-	if (input->keyboard_check_pressed(SDLK_F4)) {
-		graphics->window_toggle_fullscreen();
-	}
-
 	for (auto i : entities) {i->t_begin_step();}
 	for (auto i : entities) {i->t_step();}
 	for (auto i : entities) {i->t_end_step();}
@@ -39,30 +25,13 @@ void Game::on_game_loop() {
 	graphics->draw_clear();
 
 	for (auto i : entities) {i->t_begin_draw();}
+	subspace->draw();
 	for (auto i : entities) {i->t_draw();}
 	for (auto i : entities) {i->t_end_draw();}
-	subspace->draw();
-
-	graphics->draw_flip();
-
-	dt = SDL_GetTicks() - ticks;
-
-	if (dt < 13) {SDL_Delay((1000/60) - dt);}
-}
-
-void Game::run() {
-	on_game_start();
-	while (!quit) {
-		on_game_loop();
-	}
 }
 
 void Game::game_end() {
-	quit = true;
-}
-
-void Game::game_restart() {
-	restart = true;
+	*quit = true;
 }
 
 Entity* Game::instance_add(std::shared_ptr<Entity> inst) {

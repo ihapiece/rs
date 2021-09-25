@@ -2,6 +2,7 @@
 #include <iostream>
 
 Graphics::Graphics() {
+	std::cout << "1\n";
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GetDesktopDisplayMode(0, &display);
 
@@ -46,10 +47,6 @@ void Graphics::draw_set_color(unsigned char r, unsigned char g, unsigned char b,
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
-void Graphics::draw_set_color(SDL_Color& c) {
-	SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
-}
-
 void Graphics::draw_clear() {
 	SDL_RenderClear(renderer);
 }
@@ -91,10 +88,13 @@ void Graphics::load_sprite(const std::string& filename, int subimgcount) {
 	spr->subimgcount = subimgcount;
 	SDL_QueryTexture(spr->texture, NULL, NULL,  &spr->width, &spr->height);
 	spr->width /= subimgcount;
+
 }
 
 void Graphics::draw_sprite(const std::string& sprname, int subimg, Vec pos) {
+	std::cout << "2\n";
 	draw_sprite_ex(sprname, subimg, pos, 0, 1, 1);
+	std::cout << "3\n";
 }
 
 void Graphics::draw_sprite_ex(const std::string& sprname, int subimg, Vec pos, float angle, float xscale, float yscale) {
