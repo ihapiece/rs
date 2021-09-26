@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 
 	float dt;
 	game.on_game_start();
-	while (sfml.window.open()) {
+	while (sfml.window.isOpen()) {
 		sfml.handle_events();
 		sfml.window.clear(sf::Color::White);
 		game.on_game_loop(); //if not paused!

@@ -9,7 +9,7 @@ Game::~Game() {
 }
 
 void Game::on_game_start() {
-	subspace = new Subspace(Vec(400, 320), Vec(140, 100), graphics);
+	subspace = new Subspace(Vec(400, 320), Vec(140, 100));
 	subspace->add(Vec(100, 340));
 	subspace->add(Vec(160, 300));
 

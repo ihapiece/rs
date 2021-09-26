@@ -1,7 +1,7 @@
 #include "sfmlutil.h"
 
 sfmlutil::sfmlutil() {
-  window.create(sf::Videomode::getDesktopMode(), "RS", sf::Style::Fullscreen);
+  window.create(sf::VideoMode::getDesktopMode(), "RS", sf::Style::Fullscreen);
   window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 }
@@ -23,7 +23,7 @@ void sfmlutil::handle_events() {
         break;
 
       default:
-        break
+        break;
     }
   }
 }

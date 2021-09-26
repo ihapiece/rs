@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "game.h"
+#include "vec.h"
 
 class Subspace {
 public:

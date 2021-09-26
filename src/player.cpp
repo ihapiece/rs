@@ -15,7 +15,6 @@ void Player::on_create() {
 	btl = Vec(-8, -10);
 	bbr = Vec(8, 24);
 	coyote = 0;
-	sprite = "spr_player_strip5";
 }
 
 void Player::on_step() {
@@ -73,7 +72,7 @@ void Player::on_begin_draw() {
 }
 
 void Player::on_draw() {
-	
+
 }
 
 void Player::on_destroy() {
