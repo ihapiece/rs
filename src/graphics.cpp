@@ -3,21 +3,17 @@
 
 Graphics::Graphics() {
 	std::cout << "1\n";
-	SDL_Init(SDL_INIT_VIDEO);
-	SDL_GetDesktopDisplayMode(0, &display);
 
 	windowsize = {640, 360};
-	window = SDL_CreateWindow("rs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowsize.x, windowsize.y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	to_camera = true;
-	scale = 1;
+	sf::VideoMode vm(windowsize[0], windowsize[1]);
+	if (!vm.isValid()) {std::cout << "SFML VideoMode is not valid!\n"}
+	window.create(vm, "RS");
+	window.setVerticalSyncEnabled(true);
+	window.setFramerateLimit(60);
 }
 
 Graphics::~Graphics() {
-	for (auto i : sprites) {
-		delete i.second;
-	}
-	SDL_Quit();
+	
 }
 
 void Graphics::window_refresh() {

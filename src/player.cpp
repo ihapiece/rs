@@ -75,7 +75,7 @@ void Player::on_begin_draw() {
 }
 
 void Player::on_draw() {
-	graphics->draw_sprite_ex(sprite, subimg, pos, angle, xscale, yscale);
+	graphics->draw_rectangle(pos+btl, pos+bbr, false);
 	meeting_solid(pos);
 }
 
