@@ -5,6 +5,8 @@
 
 struct sfmlutil {
   sf::RenderWindow window;
+  sf::ContextSettings contextsettings;
+  bool fullscreen;
 
   std::map<sf::Keyboard::Key, bool> last;
   std::map<sf::Keyboard::Key, bool> pressed;

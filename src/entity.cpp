@@ -27,7 +27,7 @@ void Entity::t_step() {
 	on_step();
 }
 
-void Entity::t_end_step() {on_end_step();}
+void Entity::t_end_step() {on_end_step(); pos.x = round(pos.x); pos.y = round(pos.y);}
 void Entity::t_begin_draw() {
 	on_begin_draw();
 	bshape.setOrigin(sf::Vector2f(-btl.x, -btl.y));

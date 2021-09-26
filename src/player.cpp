@@ -64,6 +64,7 @@ void Player::on_end_step() {
 		if (abs(d) < abs(r)) {speed.y = int(!(speed.y * d < 0)); pos.y += d;} else {speed.x = int(!(speed.x * r < 0)); pos.x += r;}
 	}
 
+	game->camera.setCenter(pos.x, pos.y);
 	//sfml->window.getView.setCenter(sf::Vector2f(pos.x, pos.y)); //will make this smooth again soon
 }
 

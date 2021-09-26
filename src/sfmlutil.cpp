@@ -1,7 +1,8 @@
 #include "sfmlutil.h"
 
 sfmlutil::sfmlutil() {
-  window.create(sf::VideoMode::getDesktopMode(), "RS", sf::Style::Fullscreen);
+  contextsettings.antialiasingLevel = 4;
+  window.create(sf::VideoMode(400, 200), "RS", sf::Style::Default, contextsettings);
   window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 }

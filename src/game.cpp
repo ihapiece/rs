@@ -1,7 +1,7 @@
 #include "game.h"
 
 Game::Game(sfmlutil* s_) : sfml(s_) {
-
+	zoom = 1;
 }
 
 Game::~Game() {
@@ -20,6 +20,10 @@ void Game::on_game_loop() {
 	for (auto i : entities) {i->t_begin_step();}
 	for (auto i : entities) {i->t_step();}
 	for (auto i : entities) {i->t_end_step();}
+
+	camera.setSize(sfml->window.getSize().x, sfml->window.getSize().y);
+	camera.zoom(zoom);
+	sfml->window.setView(camera);
 }
 
 void Game::on_game_draw() {

@@ -1,21 +1,6 @@
 #include "menu.h" //includes game
 #include "entities.h"
 
-// reminder: there's a command that generates the SDL compile command
-
-// todo at the moment
-// - switch to SFML, i can't be bothered with SDL's shit anymore
-//
-// - main/pause menu (same thing to be simple)
-// - subspaces
-// - move the player and stuff to their own files you animal
-// - world and world serialization
-// - saving and loading
-// - asset unpacking with physfs
-// - rotatable subspaces
-// - slopes
-// - subspace teleportation
-
 int main(int argc, char *argv[]) {
 	sfmlutil sfml; // give everything a pointer to this
 	Game game(&sfml);
