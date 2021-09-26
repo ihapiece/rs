@@ -5,8 +5,7 @@
 
 // todo at the moment
 // - switch to SFML, i can't be bothered with SDL's shit anymore
-//   - port Graphics class
-//   - port Input class
+//
 // - main/pause menu (same thing to be simple)
 // - subspaces
 // - move the player and stuff to their own files you animal
@@ -20,16 +19,11 @@
 int main(int argc, char *argv[]) {
 	bool quit = false;
 	bool restart = false;
-	Graphics graphics;
-	Input input(&quit);
-	input.graphics = &graphics;
+	sf::RenderWindow window;
 
 	Game game(&quit);
 
-	game.input = &input;
-	game.graphics = &graphics;
-
-	//graphics.load_sprite("spr_player_strip5", 5);
+	//normally the menu class would handle this, but it doesn't exist yet
 	game.instance_add(std::make_shared<Player>());
 	auto b = game.instance_add(std::make_shared<Block>());
 	b->pos = Vec(200, 480);
@@ -53,7 +47,7 @@ int main(int argc, char *argv[]) {
 	float dt;
 	game.on_game_start();
 	while (!quit) {
-		input.update();
+
 
 		if (input.keyboard_check_pressed(SDLK_F4)) {
 			graphics.window_toggle_fullscreen();
@@ -65,7 +59,7 @@ int main(int argc, char *argv[]) {
 
 		game.on_game_loop();
 
-		graphics.draw_flip();
+
 	}
 
 	return 0;

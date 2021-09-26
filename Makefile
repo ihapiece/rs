@@ -1,5 +1,5 @@
 CFLAGS = -std=c++17 -O0 -g
-LDFLAGS = -lSDL2 -lSDL2_image -static-libgcc -static-libstdc++ -lm
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -static-libgcc -static-libstdc++ -lm
 LDFLAGSWINDOWS = -mwindows
 
 GMist: src/*.cpp src/*.h

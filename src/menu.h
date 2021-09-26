@@ -5,5 +5,4 @@
 struct Menu {
   int submenu;
   int selection;
-
 };

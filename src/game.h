@@ -6,9 +6,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "vec.h"
-#include "graphics.h"
-#include "input.h"
+#include <SFML/Graphics.hpp>
 
 #include "subspace.h"
 
@@ -19,8 +17,6 @@ protected:
 	bool* quit;
 
 public:
-	Input* input;
-	Graphics* graphics;
 	unsigned int dt;
 	std::vector<std::shared_ptr<Entity>> entities;
 	Subspace* subspace;
@@ -41,8 +37,6 @@ public:
 class Entity {
 public:
 	Game* game;
-	Input* input;
-	Graphics* graphics;
 
 	Vec pos; // center of sprite
 	Vec pos_previous;
