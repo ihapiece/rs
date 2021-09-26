@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game(bool* q_) : quit(q_) {
+Game::Game(sfmlutil* s_) : sfml(s_) {
 
 }
 
@@ -20,10 +20,9 @@ void Game::on_game_loop() {
 	for (auto i : entities) {i->t_begin_step();}
 	for (auto i : entities) {i->t_step();}
 	for (auto i : entities) {i->t_end_step();}
+}
 
-	graphics->draw_set_color(0x00, 0x00, 0x00, 0xFF);
-	graphics->draw_clear();
-
+void Game::on_game_draw() {
 	for (auto i : entities) {i->t_begin_draw();}
 	subspace->draw();
 	for (auto i : entities) {i->t_draw();}
@@ -37,8 +36,7 @@ void Game::game_end() {
 Entity* Game::instance_add(std::shared_ptr<Entity> inst) {
 	entities.emplace_back(inst);
 	inst->game = this;
-	inst->input = input;
-	inst->graphics = graphics;
+	inst->sfml = sfml;
 	return inst.get();
 }
 

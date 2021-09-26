@@ -1,7 +1,7 @@
 #include "subspace.h"
 #include <iostream>
 
-Subspace::Subspace(Vec pos, Vec size, Graphics* g) : graphics(g) {
+Subspace::Subspace(Vec pos, Vec size) {
   count = 1;
   tl.push_back(pos);
   br.push_back(pos+size);
@@ -28,8 +28,6 @@ bool Subspace::ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
         Vec br2crop = { std::min(br2.x, br[i].x), std::min(br2.y, br[i].y) };
         tl2crop += tl[j]-tl[i];
         br2crop += tl[j]-tl[i];
-        graphics->draw_set_color(0x01, 0xff, 0x01, 0xff);
-        graphics->draw_rectangle(tl2crop, br2crop, true);
         if (j != i && aabb(tl1, br1, tl2crop, br2crop)) {return true;}
       }
     }
@@ -38,8 +36,4 @@ bool Subspace::ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
 }
 
 void Subspace::draw() {
-  graphics->draw_set_color(0xFF, 0x00, 0x00, 0x00);
-  for (unsigned int i = 0; i < count; i++) {
-    graphics->draw_rectangle(tl[i], br[i], true);
-  }
 }

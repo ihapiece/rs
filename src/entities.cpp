@@ -8,8 +8,7 @@ Block::Block() {
 }
 
 void Block::on_end_draw() {
-  graphics->draw_set_color(0xff, 0xff, 0xff, 0x00);
-  graphics->draw_rectangle(pos+btl, pos+bbr, false);
+
 }
 
 WavingBlock::WavingBlock() {
@@ -31,6 +30,5 @@ void WavingBlock::on_step() {
 }
 
 void WavingBlock::on_end_draw() {
-  graphics->draw_set_color(0xff, 0xff, 0xff, 0x00);
-  graphics->draw_rectangle(pos+btl, pos+bbr, false);
+  
 }

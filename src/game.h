@@ -6,8 +6,8 @@
 #include <algorithm>
 #include <iostream>
 
-#include <SFML/Graphics.hpp>
-
+#include "sfmlutil.h"
+#include "vec.h"
 #include "subspace.h"
 
 class Entity;
@@ -17,16 +17,17 @@ protected:
 	bool* quit;
 
 public:
-	unsigned int dt;
+	sfmlutil* sfml;
 	std::vector<std::shared_ptr<Entity>> entities;
 	Subspace* subspace;
 
-	Game(bool* q_); // get input and graphics ready
+	Game(sfmlutil* s_); // get input and graphics ready
 	~Game(); // flush everything
 
 	void run();
 	void on_game_start();
 	void on_game_loop();
+	void on_game_draw();
 
 	void game_end();
 
@@ -37,6 +38,7 @@ public:
 class Entity {
 public:
 	Game* game;
+	sfmlutil* sfml;
 
 	Vec pos; // center of sprite
 	Vec pos_previous;
@@ -47,13 +49,7 @@ public:
 	bool solid;
 	bool moves;
 
-	std::string sprite;
-	int subimg;
-	float anim_speed;
-	float subimgf;
-	float xscale; //sprite stretching, unrelated to the bounding box
-	float yscale;
-	float angle;
+	sf::RectangleShape bshape;
 
 	Entity(); //must set name and initialize()
 	void initialize(); // mandatory to call before anything else in constructor

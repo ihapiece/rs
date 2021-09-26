@@ -1,4 +1,4 @@
-#include "game.h"
+#include "menu.h" //includes game
 #include "entities.h"
 
 // reminder: there's a command that generates the SDL compile command
@@ -17,11 +17,8 @@
 // - subspace teleportation
 
 int main(int argc, char *argv[]) {
-	bool quit = false;
-	bool restart = false;
-	sf::RenderWindow window;
-
-	Game game(&quit);
+	sfmlutil sfml; // give everything a pointer to this
+	Game game(&sfml);
 
 	//normally the menu class would handle this, but it doesn't exist yet
 	game.instance_add(std::make_shared<Player>());
@@ -46,20 +43,13 @@ int main(int argc, char *argv[]) {
 
 	float dt;
 	game.on_game_start();
-	while (!quit) {
-
-
-		if (input.keyboard_check_pressed(SDLK_F4)) {
-			graphics.window_toggle_fullscreen();
-		}
-
-		if (input.keyboard_check_pressed(SDLK_r)) {
-			restart = true;
-		}
-
-		game.on_game_loop();
-
-
+	while (sfml.window.open()) {
+		sfml.handle_events();
+		sfml.window.clear(sf::Color::White);
+		game.on_game_loop(); //if not paused!
+		game.on_game_draw();
+		sfml.to_last();
+		sfml.render();
 	}
 
 	return 0;
