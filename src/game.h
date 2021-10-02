@@ -20,6 +20,7 @@ public:
 	sfmlutil* sfml;
 	sf::View camera;
 	float zoom;
+
 	std::vector<std::shared_ptr<Entity>> entities;
 	Subspace* subspace;
 

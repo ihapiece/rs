@@ -4,6 +4,7 @@
 int main(int argc, char *argv[]) {
 	sfmlutil sfml; // give everything a pointer to this
 	Game game(&sfml);
+	Menu menu(&sfml);
 
 	//normally the menu class would handle this, but it doesn't exist yet
 	game.instance_add(std::make_shared<Player>());
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]) {
 	float dt;
 	game.on_game_start();
 	while (sfml.window.isOpen()) {
+		sfml.delta = sfml.frameclock.restart().asMilliseconds();
 		sfml.handle_events();
 		sfml.window.clear(sf::Color::White);
 		game.on_game_loop(); //if not paused!
