@@ -127,3 +127,7 @@ int sign(int x) {
 bool aabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
   return (!(br1.x <= tl2.x || tl1.x >= br2.x) && !(br1.y <= tl2.y || tl1.y >= br2.y));
 }
+
+float lerp(float a, float b, float t) {
+	return a + (b-a)*t;
+}

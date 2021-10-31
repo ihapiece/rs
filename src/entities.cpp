@@ -30,5 +30,5 @@ void WavingBlock::on_step() {
 }
 
 void WavingBlock::on_end_draw() {
-  
+
 }

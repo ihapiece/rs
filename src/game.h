@@ -8,6 +8,7 @@
 
 #include "sfmlutil.h"
 #include "vec.h"
+#include "tweens.h"
 #include "subspace.h"
 
 class Entity;

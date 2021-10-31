@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "vec.h"
+#include "sfmlutil.h"
 
 class Subspace {
 public:

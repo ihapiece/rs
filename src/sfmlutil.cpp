@@ -1,11 +1,13 @@
 #include "sfmlutil.h"
+#include <iostream>
 
 sfmlutil::sfmlutil() {
   contextsettings.antialiasingLevel = 4;
   window.create(sf::VideoMode(400, 200), "RS", sf::Style::Default, contextsettings);
   window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
-  delta = 0;
+  delta = 1;
+  font_regular.loadFromFile("assets/coolvetica-rg.ttf");
 }
 
 void sfmlutil::handle_events() {
@@ -22,6 +24,12 @@ void sfmlutil::handle_events() {
 
       case sf::Event::KeyReleased:
         pressed[event.key.code] = false;
+        break;
+
+      case sf::Event::Resized:
+        for (auto i : layers) {
+          i->create(window.getSize().x, window.getSize().y, contextsettings);
+        }
         break;
 
       default:
@@ -49,5 +57,17 @@ bool sfmlutil::is_key_released(sf::Keyboard::Key key) {
 void sfmlutil::to_last() {
   for (auto i : pressed) {
     last[i.first] = i.second;
+  }
+}
+
+void sfmlutil::add_layer(sf::RenderTexture* rt) {
+  layers.push_back(rt);
+  rt->create(window.getSize().x, window.getSize().y, contextsettings);
+}
+
+void sfmlutil::destroy_layer(sf::RenderTexture* t) {
+  std::cout << "trying to delete layer at " << t << "\n";
+  for (auto i : layers) {
+    std::cout << &i << "\n";
   }
 }

@@ -30,12 +30,14 @@ int main(int argc, char *argv[]) {
 	float dt;
 	game.on_game_start();
 	while (sfml.window.isOpen()) {
+		sfml.to_last();
 		sfml.delta = sfml.frameclock.restart().asMilliseconds();
 		sfml.handle_events();
-		sfml.window.clear(sf::Color::White);
-		game.on_game_loop(); //if not paused!
+		sfml.window.clear(sf::Color(40, 30, 10));
+		menu.update();
+		if (!menu.open) {game.on_game_loop();}
 		game.on_game_draw();
-		sfml.to_last();
+		menu.draw();
 		sfml.render();
 	}
 

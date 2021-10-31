@@ -1,5 +1,5 @@
 #pragma once
-#include <math.h>
+#include <cmath>
 
 struct Vec {
 	float x;
@@ -37,3 +37,4 @@ struct Vec {
 
 int sign(int x);
 bool aabb(Vec tl1, Vec br1, Vec tl2, Vec br2);
+float lerp(float a, float b, float t);

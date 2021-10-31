@@ -3,7 +3,8 @@ LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -static-libgcc -static-lib
 LDFLAGSWINDOWS = -mwindows
 
 rs: src/*.cpp src/*.h
-	g++ $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS)
+	g++ -g -O0 $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS)
+	cd build; ./rs
 
 .PHONY: clean win
 

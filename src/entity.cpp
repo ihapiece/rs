@@ -33,7 +33,9 @@ void Entity::t_begin_draw() {
 	bshape.setOrigin(sf::Vector2f(-btl.x, -btl.y));
 	bshape.setSize(sf::Vector2f(bbr.x-btl.x, bbr.y-btl.y));
 	bshape.setPosition(sf::Vector2f(int(pos.x), int(pos.y)));
-	bshape.setFillColor(sf::Color(150, 50, 250));
+	bshape.setFillColor(sf::Color::White);
+	bshape.setOutlineThickness(2.0);
+	bshape.setOutlineColor(sf::Color::Black);
 }
 void Entity::t_draw() {
 	on_draw();
