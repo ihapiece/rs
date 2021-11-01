@@ -4,7 +4,7 @@ Menu::Menu(sfmlutil* s_) : sfml(s_) {
   submenu = 0;
   selection = 2; //these should probably be enums
   open = false;
-  mainmenu = {"  errection", "  love the mets", "  the mets baby", "  it's about"};
+  mainmenu = {"  quit", "  options", "  new game", "  load save"};
 
   slope = 5;
   dark.setFillColor(sf::Color::Black);
@@ -37,7 +37,7 @@ void Menu::update() {
     selection = selection % mainmenu.size();
   }
 
-  entrance += (int(open)*2-1)*sfml->delta*0.003;
+  entrance += (int(open)*2-1)*0.05;
   entrance = std::clamp(entrance, 0.f, 1.f);
 }
 
@@ -75,7 +75,7 @@ void Menu::draw() {
       sfml->window.draw(text);
     }
 
-    cursory = lerp(cursory, size.y-(1.2*selection+2.2)*text.getScale().y*charsize, 0.05);
+    cursory = lerp(cursory, size.y-(1.2*selection+2.2)*text.getScale().y*charsize, 0.2);
     float cursoryb = cursory+text.getScale().y*charsize*1.1;
     cursor.setPoint(0, pos + sf::Vector2f(size.x-width+10+((size.y-cursoryb)/slope), cursoryb));
     cursor.setPoint(1, pos + sf::Vector2f(size.x-width+10+((size.y-cursory)/slope), cursory));

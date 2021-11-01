@@ -1,6 +1,7 @@
 //sfml helper class
 #pragma once
 #include <map>
+#include "vec.h"
 #include <SFML/Graphics.hpp>
 
 struct sfmlutil {
@@ -8,8 +9,6 @@ struct sfmlutil {
   sf::ContextSettings contextsettings;
   std::vector<sf::RenderTexture*> layers;
   bool fullscreen;
-  sf::Clock frameclock;
-  float delta;
   std::map<sf::Keyboard::Key, bool> last;
   std::map<sf::Keyboard::Key, bool> pressed;
   sf::Font font_regular;
@@ -25,3 +24,5 @@ struct sfmlutil {
   void add_layer(sf::RenderTexture* rt); //makes util take care of texture
   void destroy_layer(sf::RenderTexture* t);
 };
+
+sf::Vector2f to_sfvec2f(Vec v);

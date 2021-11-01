@@ -1,15 +1,14 @@
-CFLAGS = -std=c++17 -O0 -g
+CFLAGS = -std=c++17
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -static-libgcc -static-libstdc++ -lm -no-pie
-LDFLAGSWINDOWS = -mwindows
 
 rs: src/*.cpp src/*.h
-	g++ -g -O0 $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS)
+	g++ $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS)
 	cd build; ./rs
 
-.PHONY: clean win
+.PHONY: clean debug
 
-win: src/*.cpp src/*.h
-	g++ $(CFLAGS) -o build/rs.exe src/*.cpp $(LDFLAGSWINDOWS)
+debug: src/*.cpp src/*.h
+	g++ -O0 -g $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS) -Wl,--no-as-needed -lprofiler -Wl,--as-needed
 
 clean:
 	rm -f build/gmist.exe

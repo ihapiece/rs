@@ -10,6 +10,9 @@ void Entity::initialize() {
 	destroyed = false;
 	moves = true;
 	solid = false;
+	bshape.setFillColor(sf::Color::Transparent);
+	bshape.setOutlineThickness(2.0);
+	bshape.setOutlineColor(sf::Color::Black);
 }
 
 void Entity::t_begin_step() {
@@ -33,13 +36,11 @@ void Entity::t_begin_draw() {
 	bshape.setOrigin(sf::Vector2f(-btl.x, -btl.y));
 	bshape.setSize(sf::Vector2f(bbr.x-btl.x, bbr.y-btl.y));
 	bshape.setPosition(sf::Vector2f(int(pos.x), int(pos.y)));
-	bshape.setFillColor(sf::Color::White);
-	bshape.setOutlineThickness(2.0);
-	bshape.setOutlineColor(sf::Color::Black);
 }
 void Entity::t_draw() {
 	on_draw();
 	sfml->window.draw(bshape);
+	game->subspace->draw_to(bshape, &bshape);
 }
 void Entity::t_end_draw() {on_end_draw();}
 

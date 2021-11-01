@@ -31,7 +31,6 @@ int main(int argc, char *argv[]) {
 	game.on_game_start();
 	while (sfml.window.isOpen()) {
 		sfml.to_last();
-		sfml.delta = sfml.frameclock.restart().asMilliseconds();
 		sfml.handle_events();
 		sfml.window.clear(sf::Color(40, 30, 10));
 		menu.update();

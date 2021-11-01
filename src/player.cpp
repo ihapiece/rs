@@ -15,6 +15,7 @@ void Player::on_create() {
 	btl = Vec(-8, -10);
 	bbr = Vec(8, 24);
 	coyote = 0;
+	bshape.setFillColor(sf::Color::Cyan);
 }
 
 void Player::on_step() {
@@ -24,7 +25,8 @@ void Player::on_step() {
 	if (ground == NULL) {speed.y += .5;} else {coyote = 6;}
 	int move = int(sfml->is_key_held(sf::Keyboard::D))-int(sfml->is_key_held(sf::Keyboard::A));
 	if (sfml->is_key_pressed(sf::Keyboard::W) && coyote > 0) {speed.y = -8; coyote = 0;}
-
+	if (sfml->is_key_held(sf::Keyboard::RBracket)) {game->zoom+=0.02;}
+	if (sfml->is_key_held(sf::Keyboard::LBracket)) {game->zoom-=0.02;}
 	if (ground != NULL) {
 		if (move != 0) {
 			if (speed.x*move < maxspeed) {speed.x += move*gaccel;}

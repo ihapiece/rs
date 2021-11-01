@@ -6,7 +6,6 @@ sfmlutil::sfmlutil() {
   window.create(sf::VideoMode(400, 200), "RS", sf::Style::Default, contextsettings);
   window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
-  delta = 1;
   font_regular.loadFromFile("assets/coolvetica-rg.ttf");
 }
 
@@ -70,4 +69,9 @@ void sfmlutil::destroy_layer(sf::RenderTexture* t) {
   for (auto i : layers) {
     std::cout << &i << "\n";
   }
+}
+
+
+sf::Vector2f to_sfvec2f(Vec v) {
+  return sf::Vector2f(v.x, v.y);
 }

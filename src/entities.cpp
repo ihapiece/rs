@@ -5,6 +5,7 @@ Block::Block() {
   name = "Block";
   solid = true;
   moves = false;
+  bshape.setFillColor(sf::Color::White);
 }
 
 void Block::on_end_draw() {
@@ -15,6 +16,7 @@ WavingBlock::WavingBlock() {
   initialize();
   name = "WavingBlock";
   solid = true;
+  bshape.setFillColor(sf::Color::Green);
 }
 
 void WavingBlock::on_create() {

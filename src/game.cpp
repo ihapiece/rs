@@ -9,9 +9,10 @@ Game::~Game() {
 }
 
 void Game::on_game_start() {
-	subspace = new Subspace(Vec(400, 320), Vec(140, 100));
-	subspace->add(Vec(100, 340));
+	subspace = new Subspace(Vec(400, 320), Vec(140, 100), sfml);
+	subspace->add(Vec(-20, 340));
 	subspace->add(Vec(160, 300));
+	subspace->add(Vec(230, 0));
 
 	for (auto i : entities) {i->on_game_start();}
 }
@@ -26,10 +27,12 @@ void Game::on_game_draw() {
 	camera.setSize(sfml->window.getSize().x, sfml->window.getSize().y);
 	camera.zoom(zoom);
 	sfml->window.setView(camera);
+	subspace->begin_draw();
 	for (auto i : entities) {i->t_begin_draw();}
-	subspace->draw();
 	for (auto i : entities) {i->t_draw();}
+	subspace->draw();
 	for (auto i : entities) {i->t_end_draw();}
+	subspace->end_draw();
 }
 
 void Game::game_end() {
