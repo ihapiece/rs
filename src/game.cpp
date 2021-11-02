@@ -5,15 +5,10 @@ Game::Game(sfmlutil* s_) : sfml(s_) {
 }
 
 Game::~Game() {
-	delete subspace; // temporary, will make some entity control subspaces soon
+
 }
 
 void Game::on_game_start() {
-	subspace = new Subspace(Vec(400, 320), Vec(140, 100), sfml);
-	subspace->add(Vec(-20, 340));
-	subspace->add(Vec(160, 300));
-	subspace->add(Vec(230, 0));
-
 	for (auto i : entities) {i->on_game_start();}
 }
 
@@ -27,12 +22,12 @@ void Game::on_game_draw() {
 	camera.setSize(sfml->window.getSize().x, sfml->window.getSize().y);
 	camera.zoom(zoom);
 	sfml->window.setView(camera);
-	subspace->begin_draw();
+	for (auto i : subspaces) {i->begin_draw();}
 	for (auto i : entities) {i->t_begin_draw();}
 	for (auto i : entities) {i->t_draw();}
-	subspace->draw();
+	for (auto i : subspaces) {i->draw();}
 	for (auto i : entities) {i->t_end_draw();}
-	subspace->end_draw();
+	for (auto i : subspaces) {i->end_draw();}
 }
 
 void Game::game_end() {
@@ -48,4 +43,27 @@ Entity* Game::instance_add(std::shared_ptr<Entity> inst) {
 
 void Game::instance_remove(Entity* inst) {
 	entities.erase(std::find_if(entities.begin(), entities.end(), [&inst](auto i) {return i.get() == inst;} ));
+}
+
+Subspace* Game::subspace_add(Vec pos, Vec size) {
+	auto ss = std::make_shared<Subspace>(pos, size, sfml);
+	subspaces.push_back(ss);
+	return ss.get();
+}
+
+void Game::subspace_remove(Subspace* ss) {
+	subspaces.erase(std::find_if(subspaces.begin(), subspaces.end(), [&ss](auto i) {return i.get() == ss;}));
+}
+
+bool Game::ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
+	for (auto i : subspaces) {
+		if (i->ssaabb(tl1, br1, tl2, br2)) {return true;}
+	}
+	return false;
+}
+
+void Game::draw_to_ss(sf::Drawable& drawable, sf::Transformable* transformable) {
+	for (auto i : subspaces) {
+		i->draw_to(drawable, transformable);
+	}
 }

@@ -22,10 +22,16 @@ int main(int argc, char *argv[]) {
 	b->bbr = Vec(32, 32);
 	for (int i = 0; i < 100; i++) {
 		b = game.instance_add(std::make_shared<Block>());
-		b->pos = Vec(0, i*32);
+		b->pos = Vec(i, i*32);
 		b->btl = Vec(-16, -16);
 		b->bbr = Vec(16, 16);
 	}
+
+	auto s = game.subspace_add(Vec(360, 320), Vec(160, 120));
+	s->add(Vec(240, 80));
+	s->add(Vec(190, 260));
+	s = game.subspace_add(Vec(30, 300), Vec(100, 160));
+	s->add(Vec(100, 160));
 
 	float dt;
 	game.on_game_start();

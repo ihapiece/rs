@@ -40,7 +40,7 @@ void Entity::t_begin_draw() {
 void Entity::t_draw() {
 	on_draw();
 	sfml->window.draw(bshape);
-	game->subspace->draw_to(bshape, &bshape);
+	game->draw_to_ss(bshape, &bshape);
 }
 void Entity::t_end_draw() {on_end_draw();}
 
@@ -66,7 +66,7 @@ void Entity::on_game_end() {}
 Entity* Entity::meeting_solid(Vec pos_) {
 	for (auto i : game->entities) {
 		if (i.get() != this && i->solid) {
-			if (game->subspace->ssaabb(pos_+btl, pos_+bbr, i->pos+i->btl, i->pos+i->bbr)) {
+			if (game->ssaabb(pos_+btl, pos_+bbr, i->pos+i->btl, i->pos+i->bbr)) {
 				return i.get();
 			}
 		}
@@ -76,7 +76,7 @@ Entity* Entity::meeting_solid(Vec pos_) {
 
 bool Entity::meeting_entity(Vec pos_, Entity* i) {
 	if (i != this) {
-		if (game->subspace->ssaabb(pos_+btl, pos_+bbr, i->pos+i->btl, i->pos+i->bbr)) {
+		if (game->ssaabb(pos_+btl, pos_+bbr, i->pos+i->btl, i->pos+i->bbr)) {
 			return true;
 		}
 	}

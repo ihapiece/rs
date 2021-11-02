@@ -8,7 +8,7 @@ rs: src/*.cpp src/*.h
 .PHONY: clean debug
 
 debug: src/*.cpp src/*.h
-	g++ -O0 -g $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS) -Wl,--no-as-needed -lprofiler -Wl,--as-needed
+	g++ -O0 -g $(CFLAGS) -o build/rs src/*.cpp $(LDFLAGS)
 
 clean:
 	rm -f build/gmist.exe

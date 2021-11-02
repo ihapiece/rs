@@ -66,7 +66,7 @@ void Player::on_end_step() {
 		if (abs(d) < abs(r)) {speed.y = int(!(speed.y * d < 0)); pos.y += d;} else {speed.x = int(!(speed.x * r < 0)); pos.x += r;}
 	}
 
-	game->camera.setCenter(sf::Vector2f(pos.x, pos.y)); //will make this smooth again soon
+	game->camera.setCenter(to_sfvec2f(Vec(game->camera.getCenter().x, game->camera.getCenter().y).lerp(pos, 0.05))); //will make this smooth again soon
 }
 
 void Player::on_begin_draw() {

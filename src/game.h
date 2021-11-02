@@ -23,7 +23,7 @@ public:
 	float zoom;
 
 	std::vector<std::shared_ptr<Entity>> entities;
-	Subspace* subspace;
+	std::vector<std::shared_ptr<Subspace>> subspaces;
 
 	Game(sfmlutil* s_); // get input and graphics ready
 	~Game(); // flush everything
@@ -37,6 +37,11 @@ public:
 
 	Entity* instance_add(std::shared_ptr<Entity> inst);
 	void instance_remove(Entity* inst);
+
+	Subspace* subspace_add(Vec pos, Vec size);
+	void subspace_remove(Subspace* ss);
+	bool ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2);
+	void draw_to_ss(sf::Drawable& drawable, sf::Transformable* transformable);
 };
 
 class Entity {

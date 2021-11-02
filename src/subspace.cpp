@@ -9,7 +9,7 @@ Subspace::Subspace(Vec pos, Vec size, sfmlutil* sfml_) : sfml(sfml_) {
   sstexture.create(int(br[0].x-tl[0].x), int(br[0].y-tl[0].y));
   rect.setOutlineThickness(2.0);
 	rect.setOutlineColor(sf::Color::White);
-  rect.setFillColor(sf::Color(0xFF, 0xFF, 0xFF, 0x90));
+  rect.setFillColor(sf::Color(0xFF, 0xFF, 0xFF, 0x80));
 }
 
 void Subspace::add(Vec pos) {
@@ -41,20 +41,21 @@ bool Subspace::ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
 }
 
 void Subspace::begin_draw() {
-  sstexture.clear(sf::Color(0, 0, 0, 0));
+  sstexture.clear(sf::Color::Transparent);
 }
 
 void Subspace::draw() {
   sstexture.display();
-}
-
-void Subspace::end_draw() {
   for (int i = 0; i < tl.size(); i++) {
     rect.setPosition(tl[i].x, tl[i].y);
     rect.setSize(to_sfvec2f(br[i]-tl[i]));
     rect.setTexture(&sstexture.getTexture());
     sfml->window.draw(rect);
   }
+}
+
+void Subspace::end_draw() {
+
 }
 
 void Subspace::draw_to(sf::Drawable& drawable, sf::Transformable* transformable) {
