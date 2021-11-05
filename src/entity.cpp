@@ -2,7 +2,7 @@
 
 Entity::Entity() {
 	initialize();
-	name = "Entity";
+	saveid = -1; //entity not to be saved
 }
 
 void Entity::initialize() {
@@ -46,10 +46,6 @@ void Entity::t_end_draw() {on_end_draw();}
 
 void Entity::instance_destroy() {
 	destroyed = true;
-}
-
-std::string Entity::get_name() {
-	return name;
 }
 
 void Entity::on_create() {}

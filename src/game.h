@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <map>
 #include <memory>
 #include <string>
+#include <sstream>
 #include <algorithm>
 #include <iostream>
 
@@ -10,18 +12,20 @@
 #include "vec.h"
 #include "tweens.h"
 #include "subspace.h"
+#include "room.h"
 
 class Entity;
 
 class Game { // this is bad software architecture but who cares
 protected:
-	bool* quit;
 
 public:
+	bool* quit;
 	sfmlutil* sfml;
 	sf::View camera;
 	float zoom;
 
+	std::string current_room;
 	std::vector<std::shared_ptr<Entity>> entities;
 	std::vector<std::shared_ptr<Subspace>> subspaces;
 
@@ -42,12 +46,16 @@ public:
 	void subspace_remove(Subspace* ss);
 	bool ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2);
 	void draw_to_ss(sf::Drawable& drawable, sf::Transformable* transformable);
+
+	Room create_room(); //makes room out of current game state
+	void deploy_room(Room& room);
 };
 
 class Entity {
 public:
 	Game* game;
 	sfmlutil* sfml;
+	int saveid;
 
 	Vec pos; // center of sprite
 	Vec pos_previous;
@@ -73,13 +81,11 @@ public:
 	void t_end_draw();
 
 	void instance_destroy();
-	std::string get_name();
 
 	virtual void on_game_start();
 	virtual void on_game_end();
 
 protected:
-	std::string name;
 	bool created;
 	bool destroyed;
 

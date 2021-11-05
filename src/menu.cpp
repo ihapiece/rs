@@ -2,9 +2,9 @@
 
 Menu::Menu(sfmlutil* s_) : sfml(s_) {
   submenu = 0;
-  selection = 2; //these should probably be enums
+  selection = 3; //these should probably be enums
   open = false;
-  mainmenu = {"  quit", "  options", "  new game", "  load save"};
+  mainmenu = {"  quit", "  options", "  save level", "  load level"};
 
   slope = 5;
   dark.setFillColor(sf::Color::Black);
@@ -19,7 +19,7 @@ Menu::Menu(sfmlutil* s_) : sfml(s_) {
   bluemultiply.blendMode = sf::BlendMultiply;
   cursor.setPointCount(4);
   text.setFont(sfml->font_regular);
-  charsize = 74;
+  charsize = 16;
   text.setCharacterSize(charsize);
 
 }
@@ -32,8 +32,11 @@ void Menu::update() {
     }
   } else {
     if (sfml->is_key_pressed(sf::Keyboard::Escape)) {open = false;}
-    if (sfml->is_key_pressed(sf::Keyboard::Up)) {selection++;}
-    if (sfml->is_key_pressed(sf::Keyboard::Down)) {selection--;}
+    if (sfml->is_key_pressed(sf::Keyboard::W)) {selection++;}
+    if (sfml->is_key_pressed(sf::Keyboard::S)) {selection--;}
+    if (sfml->is_key_pressed(sf::Keyboard::Enter)) {
+      game->game_end();
+    }
     selection = selection % mainmenu.size();
   }
 

@@ -31,7 +31,7 @@ void Game::on_game_draw() {
 }
 
 void Game::game_end() {
-	*quit = true;
+	sfml->window.close();
 }
 
 Entity* Game::instance_add(std::shared_ptr<Entity> inst) {

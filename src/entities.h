@@ -28,10 +28,10 @@ public:
 	virtual void on_end_draw();
 };
 
-
 class WavingBlock : public Entity {
 public:
 	float t;
+  float tsp;
 	float basey;
 	float basex;
 	WavingBlock();

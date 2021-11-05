@@ -2,7 +2,7 @@
 
 Player::Player() {
 	initialize();
-	name = "Player";
+	saveid = 0;
 }
 
 void Player::on_create() {
