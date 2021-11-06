@@ -19,7 +19,7 @@ Menu::Menu(sfmlutil* s_) : sfml(s_) {
   bluemultiply.blendMode = sf::BlendMultiply;
   cursor.setPointCount(4);
   text.setFont(sfml->font_regular);
-  charsize = 16;
+  charsize = 64;
   text.setCharacterSize(charsize);
 
 }
@@ -35,7 +35,16 @@ void Menu::update() {
     if (sfml->is_key_pressed(sf::Keyboard::W)) {selection++;}
     if (sfml->is_key_pressed(sf::Keyboard::S)) {selection--;}
     if (sfml->is_key_pressed(sf::Keyboard::Enter)) {
-      game->game_end();
+      switch (selection) {
+        case 0:
+          game->game_end();
+          break;
+
+        case 3:
+          Room room("assets/testarea.room");
+          game->deploy_room(room);
+          break;
+      }
     }
     selection = selection % mainmenu.size();
   }

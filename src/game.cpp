@@ -2,6 +2,7 @@
 
 Game::Game(sfmlutil* s_) : sfml(s_) {
 	zoom = 1;
+	current_room = "nothing";
 }
 
 Game::~Game() {

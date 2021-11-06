@@ -6,7 +6,7 @@ sfmlutil::sfmlutil() {
   window.create(sf::VideoMode(400, 200), "RS", sf::Style::Default, contextsettings);
   window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
-  font_regular.loadFromFile("assets/coolvetica-rg.ttf");
+  font_regular.loadFromFile("assets/texgyreheros-regular.otf");
 }
 
 void sfmlutil::handle_events() {

@@ -11,7 +11,7 @@ void Entity::initialize() {
 	moves = true;
 	solid = false;
 	bshape.setFillColor(sf::Color::Transparent);
-	bshape.setOutlineThickness(2.0);
+	bshape.setOutlineThickness(1);
 	bshape.setOutlineColor(sf::Color::Black);
 }
 

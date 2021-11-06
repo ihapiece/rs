@@ -18,8 +18,8 @@ bool Room::load(std::string fname) {
   return true;
 }
 
-bool Room::save(std::string fname) {
-  std::ofstream f(fname, std::ios::trunc);
+bool Room::save() {
+  std::ofstream f("assets/" + name, std::ios::trunc);
   if (!f) {return false;}
   for (std::string s : objects) {
     f << s << std::endl;
@@ -31,11 +31,16 @@ bool Room::save(std::string fname) {
 Room Game::create_room() {
   Room room;
   room.name = current_room;
+
+  room.save();
   return room;
 }
 
 void Game::deploy_room(Room& room) {
-  std::map<int, Subspace*> subs; //can we get some subs
+  entities.clear();
+  subspaces.clear();
+
+  std::map<int, Subspace*> subs;
 
   for (std::string s : room.objects) {
     std::stringstream o(s);

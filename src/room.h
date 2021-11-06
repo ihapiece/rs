@@ -38,5 +38,5 @@ struct Room {
   Room();
   Room(std::string fname);
   bool load(std::string fname);
-  bool save(std::string fname);
+  bool save();
 };
