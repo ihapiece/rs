@@ -78,3 +78,19 @@ bool Entity::meeting_entity(Vec pos_, Entity* i) {
 	}
 	return false;
 }
+
+void Entity::resolve_collisions() {
+	unsigned char n = 0;
+	while (Entity* i = meeting_solid(pos)) {
+		n++;
+		if (n > 5) {break;}
+		int u = 0; int d = 0; int l = 0; int r = 0;
+		while (meeting_entity(pos+Vec(0, u), i)) {u--;} // i dont think this game's physics are per
+		while (meeting_entity(pos+Vec(0, d), i)) {d++;} // pixel, might have to change this to something
+		if (d > abs(u)) {d = u;}
+		while (meeting_entity(pos+Vec(l, 0), i)) {l--;} // that finds the edge of a block
+		while (meeting_entity(pos+Vec(r, 0), i)) {r++;}
+		if (r > abs(l)) {r = l;}
+		if (abs(d) < abs(r)) {speed.y = int(!(speed.y * d < 0)); pos.y += d;} else {speed.x = int(!(speed.x * r < 0)); pos.x += r;}
+	}
+}

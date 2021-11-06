@@ -52,19 +52,8 @@ void Player::on_end_step() {
 			pos += ground->pos - ground->pos_previous;
 		}
 	}
-	unsigned char n = 0;
-	while (Entity* i = meeting_solid(pos)) {
-		n++;
-		if (n > 5) {break;}
-		int u = 0; int d = 0; int l = 0; int r = 0;
-		while (meeting_entity(pos+Vec(0, u), i)) {u--;}
-		while (meeting_entity(pos+Vec(0, d), i)) {d++;}
-		if (d > abs(u)) {d = u;}
-		while (meeting_entity(pos+Vec(l, 0), i)) {l--;}
-		while (meeting_entity(pos+Vec(r, 0), i)) {r++;}
-		if (r > abs(l)) {r = l;}
-		if (abs(d) < abs(r)) {speed.y = int(!(speed.y * d < 0)); pos.y += d;} else {speed.x = int(!(speed.x * r < 0)); pos.x += r;}
-	}
+	
+	resolve_collisions();
 
 	game->camera.setCenter(to_sfvec2f(Vec(game->camera.getCenter().x, game->camera.getCenter().y).lerp(pos, 0.05))); //will make this smooth again soon
 }

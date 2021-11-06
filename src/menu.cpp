@@ -4,7 +4,7 @@ Menu::Menu(sfmlutil* s_) : sfml(s_) {
   submenu = 0;
   selection = 3; //these should probably be enums
   open = false;
-  mainmenu = {"  quit", "  options", "  save level", "  load level"};
+  mainmenu = {"  quit", "  options", "  serialize", "  load level"};
 
   slope = 5;
   dark.setFillColor(sf::Color::Black);
@@ -38,6 +38,10 @@ void Menu::update() {
       switch (selection) {
         case 0:
           game->game_end();
+          break;
+
+        case 2:
+          game->create_room();
           break;
 
         case 3:

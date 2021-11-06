@@ -103,4 +103,5 @@ protected:
 
 	Entity* meeting_solid(Vec pos_);
 	bool meeting_entity(Vec pos_, Entity* i);
+	void resolve_collisions();
 };

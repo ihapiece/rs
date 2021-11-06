@@ -32,7 +32,58 @@ Room Game::create_room() {
   Room room;
   room.name = current_room;
 
-  room.save();
+  for (auto i : entities) {
+    if (i->saveid != -1) {
+      std::stringstream saveline;
+      saveline << i->saveid << " ";
+      switch (i->saveid) {
+        case 0: { //0 posx posy
+          Player* player = static_cast<Player*>(i.get());
+
+          saveline << player->pos.x << " ";
+          saveline << player->pos.y;
+          break;
+        }
+
+        case 1: { //1 posx posy halfsizex halfsizey
+          Entity* b = i.get();
+          saveline << b->pos.x << " ";
+          saveline << b->pos.y << " ";
+          saveline << b->bbr.x << " ";
+          saveline << b->bbr.y;
+          break;
+        }
+
+        case 3: { //3 posx posy halfsizex halfsizey rotatespeed
+          WavingBlock* wb = static_cast<WavingBlock*>(i.get());
+          saveline << wb->pos.x << " ";
+          saveline << wb->pos.y << " ";
+          saveline << wb->bbr.x << " ";
+          saveline << wb->bbr.y << " ";
+          saveline << wb->tsp;
+          break;
+        }
+      }
+      room.objects.push_back(saveline.str());
+    }
+  }
+
+  int n = 0;
+  for (auto i : subspaces) {
+    for (int r = 0; r < i->tl.size(); r++) {
+      std::stringstream saveline;
+      saveline << 2 << " " << n << " " << i->tl[r].x << " " << i->tl[r].y << " ";
+      saveline << i->br[r].x-i->tl[r].x << " " << i->br[r].y-i->tl[r].y;
+      room.objects.push_back(saveline.str());
+    }
+    n++;
+  }
+
+  std::cout << "created room " << room.name << " with the following objects:" << std::endl;
+  for (auto i : room.objects) {
+    std::cout << i << std::endl;
+  }
+
   return room;
 }
 
@@ -40,6 +91,7 @@ void Game::deploy_room(Room& room) {
   entities.clear();
   subspaces.clear();
 
+  current_room = room.name;
   std::map<int, Subspace*> subs;
 
   for (std::string s : room.objects) {
