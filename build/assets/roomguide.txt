@@ -1,0 +1,16 @@
+position is center, w and h is half the real size
+except for rifts, position is topleft, size is whole size
+if size not given, the size of the first rift in the subspace is used
+* = not implemented yet
+
+player:
+0 x y
+
+block:
+1 x y w h
+
+rift:
+2 subspace canmove topleftx toplefty rot* [w h]
+
+wavingblock:
+3 x y w h rotatespeed radiushorizontal* radiusvertical*

@@ -70,10 +70,10 @@ Room Game::create_room() {
 
   int n = 0;
   for (auto i : subspaces) {
-    for (int r = 0; r < i->tl.size(); r++) {
+    for (int r = 0; r < i->members.size(); r++) {
       std::stringstream saveline;
-      saveline << 2 << " " << n << " " << i->tl[r].x << " " << i->tl[r].y << " ";
-      saveline << i->br[r].x-i->tl[r].x << " " << i->br[r].y-i->tl[r].y;
+      saveline << 2 << " " << n << " " << i->members[r].canmove << " " << i->members[r].tl.x << " " << i->members[r].tl.y << " ";
+      saveline << i->members[r].br.x-i->members[r].tl.x << " " << i->members[r].br.y-i->members[r].tl.y;
       room.objects.push_back(saveline.str());
     }
     n++;
@@ -120,6 +120,8 @@ void Game::deploy_room(Room& room) {
       case 2: { //2 subspace tlx tly sizex sizey
         int sub;
         o >> sub;
+        bool canmove;
+        o >> canmove;
         Vec tl;
         Vec size;
         o >> tl.x;
@@ -131,10 +133,10 @@ void Game::deploy_room(Room& room) {
         }
 
         if (subs.count(sub)) {
-          if (sized) {subs[sub]->add(tl, size);} else {subs[sub]->add(tl);}
+          if (sized) {subs[sub]->add(tl, size, canmove);} else {subs[sub]->add(tl, canmove);}
         } else {
-          if (!sized) {std::cout << "No size given for initial rift! Error imminent\n";}
-          subs[sub] = subspace_add(tl, size);
+          if (!sized) {std::cout << "No size given for initial rift!\n";}
+          subs[sub] = subspace_add(tl, size, canmove);
         }
 
         break;

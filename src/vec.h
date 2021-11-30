@@ -37,4 +37,5 @@ struct Vec {
 
 int sign(int x);
 bool aabb(Vec tl1, Vec br1, Vec tl2, Vec br2);
+bool point_in_rectangle(Vec p, Vec tl, Vec br);
 float lerp(float a, float b, float t);

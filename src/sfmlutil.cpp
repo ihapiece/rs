@@ -25,6 +25,14 @@ void sfmlutil::handle_events() {
         pressed[event.key.code] = false;
         break;
 
+      case sf::Event::MouseButtonPressed:
+        mpressed[event.mouseButton.button] = true;
+        break;
+
+      case sf::Event::MouseButtonReleased:
+        mpressed[event.mouseButton.button] = false;
+        break;
+
       case sf::Event::Resized:
         for (auto i : layers) {
           i->create(window.getSize().x, window.getSize().y, contextsettings);
@@ -35,6 +43,10 @@ void sfmlutil::handle_events() {
         break;
     }
   }
+
+  auto m = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+  mouse.x = m.x;
+  mouse.y = m.y;
 }
 
 void sfmlutil::render() {
@@ -53,10 +65,28 @@ bool sfmlutil::is_key_released(sf::Keyboard::Key key) {
   return !pressed[key] && last[key];
 }
 
+bool sfmlutil::is_mouse_held(sf::Mouse::Button button) {
+  return mpressed[button];
+}
+
+bool sfmlutil::is_mouse_pressed(sf::Mouse::Button button) {
+  return mpressed[button] && !mlast[button];
+}
+
+bool sfmlutil::is_mouse_released(sf::Mouse::Button button) {
+  return !mpressed[button] && mlast[button];
+}
+
 void sfmlutil::to_last() {
   for (auto i : pressed) {
     last[i.first] = i.second;
   }
+
+  for (auto i : mpressed) {
+    mlast[i.first] = i.second;
+  }
+
+  mouse_prev = mouse;
 }
 
 void sfmlutil::add_layer(sf::RenderTexture* rt) {
@@ -74,4 +104,12 @@ void sfmlutil::destroy_layer(sf::RenderTexture* t) {
 
 sf::Vector2f to_sfvec2f(Vec v) {
   return sf::Vector2f(v.x, v.y);
+}
+
+Vec to_vec(sf::Vector2i v) {
+  return Vec(v.x, v.y);
+}
+
+Vec to_vec(sf::Vector2f v) {
+  return Vec(v.x, v.y);
 }

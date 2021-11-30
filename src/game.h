@@ -42,7 +42,7 @@ public:
 	Entity* instance_add(std::shared_ptr<Entity> inst);
 	void instance_remove(Entity* inst);
 
-	Subspace* subspace_add(Vec pos, Vec size);
+	Subspace* subspace_add(Vec pos, Vec size, bool canmove=true);
 	void subspace_remove(Subspace* ss);
 	bool ssaabb(Vec tl1, Vec br1, Vec tl2, Vec br2);
 	void draw_to_ss(sf::Drawable& drawable, sf::Transformable* transformable);

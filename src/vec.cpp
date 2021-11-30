@@ -128,6 +128,10 @@ bool aabb(Vec tl1, Vec br1, Vec tl2, Vec br2) {
   return (!(br1.x <= tl2.x || tl1.x >= br2.x) && !(br1.y <= tl2.y || tl1.y >= br2.y));
 }
 
+bool point_in_rectangle(Vec p, Vec tl, Vec br) {
+	return (p.x >= tl.x && p.x <= br.x) && (p.y >= tl.y && p.y <= br.y);
+}
+
 float lerp(float a, float b, float t) {
 	return a + (b-a)*t;
 }

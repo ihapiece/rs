@@ -14,6 +14,7 @@ void Game::on_game_start() {
 }
 
 void Game::on_game_loop() {
+	for (auto i : subspaces) {i->step();}
 	for (auto i : entities) {i->t_begin_step();}
 	for (auto i : entities) {i->t_step();}
 	for (auto i : entities) {i->t_end_step();}
@@ -46,7 +47,7 @@ void Game::instance_remove(Entity* inst) {
 	entities.erase(std::find_if(entities.begin(), entities.end(), [&inst](auto i) {return i.get() == inst;} ));
 }
 
-Subspace* Game::subspace_add(Vec pos, Vec size) {
+Subspace* Game::subspace_add(Vec pos, Vec size, bool canmove_) {
 	auto ss = std::make_shared<Subspace>(pos, size, sfml);
 	subspaces.push_back(ss);
 	return ss.get();
