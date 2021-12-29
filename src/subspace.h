@@ -7,7 +7,7 @@ struct Rift {
   Vec tl;
   Vec br;
   bool canmove;
-  bool hovered;
+  bool hovered = false;
 };
 
 class Subspace {
@@ -22,6 +22,7 @@ public:
   sfmlutil* sfml;
 
   bool anyhovered;
+  Rift* picked;
 
   Subspace(Vec pos, Vec size, sfmlutil* sfml_, bool canmove_=true);
   void add(Vec pos, bool canmove_=true);

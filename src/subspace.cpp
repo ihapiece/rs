@@ -14,6 +14,9 @@ Subspace::Subspace(Vec pos, Vec size, sfmlutil* sfml_, bool canmove_) : sfml(sfm
   rect.setOutlineThickness(2.0);
 	rect.setOutlineColor(sf::Color::White);
   rect.setFillColor(sf::Color(0xFF, 0xFF, 0xFF, 0x80));
+
+  anyhovered = false;
+  picked = NULL;
 }
 
 void Subspace::add(Vec pos, bool canmove_) {
@@ -54,13 +57,19 @@ void Subspace::step() {
   anyhovered = false;
   for (int i = 0; i < members.size(); i++) {
     members[i].hovered = false;
-    if (point_in_rectangle(sfml->mouse, members[i].tl, members[i].br)) {
+    if (point_in_rectangle(sfml->mouse, members[i].tl, members[i].br) && !picked) {
       members[i].hovered = true; anyhovered = true;
-      if (sfml->is_mouse_held(sf::Mouse::Button::Left)) {
-        members[i].tl += sfml->mouse-sfml->mouse_prev;
-        members[i].br += sfml->mouse-sfml->mouse_prev;
+      if (sfml->is_mouse_pressed(sf::Mouse::Button::Left)) {
+        picked = &members[i];
       }
     }
+  }
+
+  if (picked) {
+    picked->tl += sfml->mouse-sfml->mouse_prev;
+    picked->br += sfml->mouse-sfml->mouse_prev;
+    if (sfml->is_mouse_released(sf::Mouse::Button::Left))
+      picked = NULL;
   }
 }
 
