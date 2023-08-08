@@ -16,6 +16,7 @@ void Player::on_create() {
 	bbr = Vec(8, 24);
 	coyote = 0;
 	bshape.setFillColor(sf::Color::Cyan);
+	dead = false;
 }
 
 void Player::on_step() {
@@ -53,7 +54,7 @@ void Player::on_end_step() {
 		}
 	}
 	
-	resolve_collisions();
+	if (!resolve_collisions()) {dead = true; bshape.setFillColor(sf::Color::Red);}
 
 	game->camera.setCenter(to_sfvec2f(Vec(game->camera.getCenter().x, game->camera.getCenter().y).lerp(pos, 0.05))); //will make this smooth again soon
 }

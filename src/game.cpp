@@ -11,12 +11,16 @@ Game::~Game() {
 
 void Game::on_game_start() {
 	for (auto i : entities) {i->on_game_start();}
+	editor.sfml = sfml;
+	editor.game = this;
+	editor.start();
 }
 
 void Game::on_game_loop() {
 	for (auto i : subspaces) {i->step();}
 	for (auto i : entities) {i->t_begin_step();}
 	for (auto i : entities) {i->t_step();}
+	editor.update();
 	for (auto i : entities) {i->t_end_step();}
 }
 
@@ -30,6 +34,7 @@ void Game::on_game_draw() {
 	for (auto i : subspaces) {i->draw();}
 	for (auto i : entities) {i->t_end_draw();}
 	for (auto i : subspaces) {i->end_draw();}
+	editor.draw();
 }
 
 void Game::game_end() {

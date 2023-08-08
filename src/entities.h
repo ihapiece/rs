@@ -13,6 +13,7 @@ class Player : public Entity {
 	float maxspeed;
 	float aaccel;
 	float airres;
+	bool dead;
 
   virtual void on_create();
   virtual void on_step();
@@ -31,7 +32,7 @@ public:
 class WavingBlock : public Entity {
 public:
 	float t;
-  float tsp;
+	float tsp;
 	float basey;
 	float basex;
 	WavingBlock();

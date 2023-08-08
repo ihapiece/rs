@@ -13,6 +13,7 @@
 #include "tweens.h"
 #include "subspace.h"
 #include "room.h"
+#include "editor.h"
 
 class Entity;
 
@@ -28,6 +29,7 @@ public:
 	std::string current_room;
 	std::vector<std::shared_ptr<Entity>> entities;
 	std::vector<std::shared_ptr<Subspace>> subspaces;
+	Editor editor;
 
 	Game(sfmlutil* s_); // get input and graphics ready
 	~Game(); // flush everything
@@ -103,5 +105,5 @@ protected:
 
 	Entity* meeting_solid(Vec pos_);
 	bool meeting_entity(Vec pos_, Entity* i);
-	void resolve_collisions();
+	bool resolve_collisions();
 };
